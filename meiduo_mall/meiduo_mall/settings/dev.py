@@ -44,11 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'corsheaders',
 
     'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # 最外层的中间件
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -217,3 +219,9 @@ REST_FRAMEWORK = {
 
 # 指定默认的⽤户模型类
 AUTH_USER_MODEL = 'users.User'
+
+# CORS 追加⽩名单
+CORS_ORIGIN_WHITELIST = (
+ 'http://127.0.0.1:5555',
+ 'http://localhost:5555', )
+CORS_ALLOW_CREDENTIALS = True # 允许携带cookie
