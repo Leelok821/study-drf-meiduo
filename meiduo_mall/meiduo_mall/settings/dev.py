@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure--8^p4%(i(g2yir%fla$u)(#7^nhryp^mzp3wfw$iqsru6kv)ka
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['api.meiduo.site']
 
 
 # Application definition
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    'corsheaders',
+    'corsheaders',  # 跨域
 
     'users.apps.UsersConfig',
 ]
@@ -104,23 +104,24 @@ DATABASES = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/0",
+        "LOCATION": "redis://172.16.156.129:6379/0",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     },
     "session": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": "redis://172.16.156.129:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     },
     "verify_codes": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/2",
+        "LOCATION": "redis://172.16.156.129:6379/2",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "DECODE_RESPONSES": True
         }
     }
 }
@@ -222,6 +223,9 @@ AUTH_USER_MODEL = 'users.User'
 
 # CORS 追加⽩名单
 CORS_ORIGIN_WHITELIST = (
- 'http://127.0.0.1:5555',
- 'http://localhost:5555', )
+ 'http://127.0.0.1:8081',
+ 'http://localhost:5555',
+ 'http://www.meiduo.site:8081',
+ 'http://api.meiduo.site:8000',
+ )
 CORS_ALLOW_CREDENTIALS = True # 允许携带cookie

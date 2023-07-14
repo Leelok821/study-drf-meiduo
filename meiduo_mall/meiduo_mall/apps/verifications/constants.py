@@ -1,0 +1,3 @@
+SMS_CODE_REDIS_EXPIRES = 300 #短信验证码到期 300秒
+
+SEND_SMS_CODE_INTERVAL = 60 #短信是否60秒内发送过
