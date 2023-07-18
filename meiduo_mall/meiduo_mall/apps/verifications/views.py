@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from verifications.constants import SEND_SMS_CODE_INTERVAL,SMS_CODE_REDIS_EXPIRES
 from django_redis import get_redis_connection
 from rest_framework import status
+from celery_tasks.sms.tasks import send_sms_code
 import random
 import logging
 
@@ -28,15 +29,22 @@ class SmsCodeVeiw(APIView):
         sms_code = '{0}'.format(random.randint(0,1000000))
 
         # 创建管道
+        pl = redis_con.pipeline()
         
 
         # 保存短信验证码到Redis
         # 设置缓存内容
         #  key value timeout
-        redis_con.set(f'sms_{mobile}', sms_code, SMS_CODE_REDIS_EXPIRES)
-        redis_con.set(f'sms_flag_{mobile}', 1, SMS_CODE_REDIS_EXPIRES)
-        # 发送短信test
-        logger.info(f'send sms_code:{sms_code} to mobile:{mobile}')
+        # redis_con.set(f'sms_{mobile}', sms_code, SMS_CODE_REDIS_EXPIRES)
+        # redis_con.set(f'sms_flag_{mobile}', 1, SMS_CODE_REDIS_EXPIRES)
+
+        pl.set(f'sms_{mobile}', sms_code, SMS_CODE_REDIS_EXPIRES)
+        pl.set(f'sms_flag_{mobile}', 1, SMS_CODE_REDIS_EXPIRES)
+
+        # # 执⾏
+        pl.execute()
+        # send_sms_code
+        send_sms_code.delay(mobile, sms_code)
         # 响应结果
         return Response({'message':'ok'})
         
