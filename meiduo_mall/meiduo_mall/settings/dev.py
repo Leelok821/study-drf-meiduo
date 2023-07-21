@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'corsheaders',  # 跨域
 
     'users.apps.UsersConfig',
+    'booktest.apps.BooktestConfig',
 ]
 
 MIDDLEWARE = [
