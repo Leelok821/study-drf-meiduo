@@ -10,11 +10,14 @@ class BookInfo(models.Model):
     bcomment = models.IntegerField(verbose_name='评论量', default=0)
     is_delete = models.BooleanField(verbose_name='逻辑删除', default=False)
 
+    def __str__(self) -> str:
+        return self.btitle
+
 
 class HeroInfo(models.Model):
-    GENDER_CHOICES = (('male', 0), ('female', 1))
+    GENDER_CHOICES = ((0, 'male'), (1, 'female'))
     hname = models.CharField(max_length=20, verbose_name='名称')
-    hgender = models.SmallIntegerField(choices=GENDER_CHOICES, default=0, verbose_name='性别')
+    hgender = models.SmallIntegerField(verbose_name='性别', choices=GENDER_CHOICES, default=0)
     hcomment = models.CharField(max_length=200, null=True, verbose_name='描述信息')
-    hbook = models.ForeignKey(to=BookInfo, on_delete=models.CASCADE, verbose_name='所属书籍')
+    hbook = models.ForeignKey(to=BookInfo, on_delete=models.CASCADE, verbose_name='所属书籍',related_name='Lee')
     is_delete = models.BooleanField(default=False, verbose_name='逻辑删除')

@@ -217,8 +217,16 @@ LOGGING = {
 
 REST_FRAMEWORK = {
     # 异常处理
-    'EXCEPTION_HANDLER': 'meiduo_mall.utils.exceptions.exception_handler', }
-
+    'EXCEPTION_HANDLER': 'meiduo_mall.utils.exceptions.exception_handler',
+    # 权限认证全局
+    'DEFAULT_AUTHENTICATION_CLASSES':['rest_framework.authentication.BasicAuthentication',# BasicAuthentication:此身份验证方案使用HTTP基本身份验证
+    # # SessionAuthentication:此身份验证方案使用Django的默认会话后端进行身份验证
+    'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES':[
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
 # 指定默认的⽤户模型类
 AUTH_USER_MODEL = 'users.User'
 

@@ -13,5 +13,8 @@
 # hsobj.update(value.encode("utf-8"))
 # token = hsobj.hexdigest()
 # print(token)
-def test(name, age):
-    print(name, age)
+def test(**kwags):
+    print(kwags)
+
+
+test(**{'lebron':'james','kobe':'branyt'})
