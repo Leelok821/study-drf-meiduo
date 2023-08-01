@@ -7,7 +7,7 @@ from rest_framework.serializers import Serializer
 from rest_framework.response import Response
 from rest_framework import status
 from users.models import User
-from users.serializers import UserSerializer
+from users.serializers import CreateUserSerializer
 
 
 """使用genericapiview"""
@@ -28,4 +28,4 @@ from users.serializers import UserSerializer
 
 class UserView(CreateAPIView):
 
-    serializer_class = UserSerializer
+    serializer_class = CreateUserSerializer
