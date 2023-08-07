@@ -29,3 +29,16 @@ from users.serializers import CreateUserSerializer
 class UserView(CreateAPIView):
 
     serializer_class = CreateUserSerializer
+
+class UserNameCountView(APIView):
+
+    def get(self, request, user_name):
+        user_count = User.objects.filter(username=user_name).count()
+        return Response({'username':user_name, 'count': user_count})
+
+class MobileCountView(APIView):
+
+    def get(self, request, mobile):
+        count = User.objects.filter(mobile=mobile).count()
+        return Response({'mobile':mobile, 'count': count})
+

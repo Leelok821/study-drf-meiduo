@@ -14,6 +14,7 @@ from pathlib import Path
 
 import os
 import sys
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -219,9 +220,11 @@ REST_FRAMEWORK = {
     # 异常处理
     'EXCEPTION_HANDLER': 'meiduo_mall.utils.exceptions.exception_handler',
     # 权限认证全局
-    'DEFAULT_AUTHENTICATION_CLASSES':['rest_framework.authentication.BasicAuthentication',# BasicAuthentication:此身份验证方案使用HTTP基本身份验证
-    # # SessionAuthentication:此身份验证方案使用Django的默认会话后端进行身份验证
-    'rest_framework.authentication.SessionAuthentication',
+    'DEFAULT_AUTHENTICATION_CLASSES':[
+        'rest_framework.authentication.BasicAuthentication',# BasicAuthentication:此身份验证方案使用HTTP基本身份验证
+        'rest_framework.authentication.SessionAuthentication',         # SessionAuthentication:此身份验证方案使用Django的默认会话后端进行身份验证
+        # 'rest_framework.authentication.TokenAuthentication', # 基础token认证
+        'rest_framework_simplejwt.authentication.JWTAuthentication', # 使用rest_framework_simplejwt(token)验证身份
     ],
     'DEFAULT_PERMISSION_CLASSES':[
         'rest_framework.permissions.IsAuthenticated',
@@ -238,3 +241,13 @@ CORS_ORIGIN_WHITELIST = (
  'http://api.meiduo.site:8000',
  )
 CORS_ALLOW_CREDENTIALS = True # 允许携带cookie
+
+# JWT的有效期
+SIMPLE_JWT = {
+
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),  # 访问令牌的有效时间
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),    # 刷新令牌的有效时间
+    'TOKEN_OBTAIN_SERIALIZER': 'users.serializers.MyTokenObtainPairSerializer'
+}
+
+AUTHENTICATION_BACKENDS = ["users.utils.MyModelBackend"]

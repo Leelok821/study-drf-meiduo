@@ -225,7 +225,7 @@ class BookReadOnlyModelViewSet(ReadOnlyModelViewSet):
 
 class BookModelViewSet(ModelViewSet):
 
-    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    # authentication_classes = (BasicAuthentication, )
 
     queryset = BookInfo.objects.all()
     serializer_class = BookInfoModelSerializers
