@@ -221,10 +221,10 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'meiduo_mall.utils.exceptions.exception_handler',
     # 权限认证全局
     'DEFAULT_AUTHENTICATION_CLASSES':[
+        'rest_framework_simplejwt.authentication.JWTAuthentication', # 使用rest_framework_simplejwt(token)验证身份
         'rest_framework.authentication.BasicAuthentication',# BasicAuthentication:此身份验证方案使用HTTP基本身份验证
         'rest_framework.authentication.SessionAuthentication',         # SessionAuthentication:此身份验证方案使用Django的默认会话后端进行身份验证
         # 'rest_framework.authentication.TokenAuthentication', # 基础token认证
-        'rest_framework_simplejwt.authentication.JWTAuthentication', # 使用rest_framework_simplejwt(token)验证身份
     ],
     'DEFAULT_PERMISSION_CLASSES':[
         'rest_framework.permissions.IsAuthenticated',
@@ -251,3 +251,13 @@ SIMPLE_JWT = {
 }
 
 AUTHENTICATION_BACKENDS = ["users.utils.MyModelBackend"]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_PORT = 25
+# 发送邮件的邮箱
+EMAIL_HOST_USER = 'leelok821@163.com'
+# 在邮箱中设置的客户端授权密码
+EMAIL_HOST_PASSWORD = 'RZVLFEMVZMYHCYOR'
+# 收件⼈看到的发件⼈
+EMAIL_FROM = 'python<itcast99@163.com>'

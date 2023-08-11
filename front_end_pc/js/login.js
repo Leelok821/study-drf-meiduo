@@ -53,13 +53,13 @@ var vm = new Vue({
                         if (this.remember) {
                             // 记住登录
                             sessionStorage.clear();
-                            localStorage.token = response.data.token;
+                            localStorage.token = response.data.token.access;
                             localStorage.user_id = response.data.user_id;
                             localStorage.username = response.data.username;
                         } else {
                             // 未记住登录
                             localStorage.clear();
-                            sessionStorage.token = response.data.token;
+                            sessionStorage.token = response.data.token.access;
                             sessionStorage.user_id = response.data.user_id;
                             sessionStorage.username = response.data.username;
                         }

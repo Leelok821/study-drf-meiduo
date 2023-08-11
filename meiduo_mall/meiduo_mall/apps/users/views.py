@@ -2,13 +2,13 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView,CreateAPIView
+from rest_framework.generics import GenericAPIView,CreateAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.serializers import Serializer
 from rest_framework.response import Response
 from rest_framework import status
 from users.models import User
-from users.serializers import CreateUserSerializer
-
+from users.serializers import CreateUserSerializer, UserDetailSerializer, EmailSerializer
+from rest_framework.permissions import IsAuthenticated
 
 """使用genericapiview"""
 
@@ -42,3 +42,40 @@ class MobileCountView(APIView):
         count = User.objects.filter(mobile=mobile).count()
         return Response({'mobile':mobile, 'count': count})
 
+
+class UserDetailView(RetrieveAPIView):
+
+    serializer_class = UserDetailSerializer
+
+    def get_object(self):
+        return self.request.user
+
+class EmailView(UpdateAPIView):
+
+    serializer_class = EmailSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+
+class VerifyEmailView(APIView):
+    """验证邮箱"""
+    # authentication_classes = []
+    permission_classes = []
+
+    def get(self, request):
+        # 获取token参数
+        token = request.query_params.get('token')
+        if not token:
+            return Response({'message':'缺少token'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # 验证token参数：提取user
+        user = User.check_verify_email_token(token)
+        if not user:
+            return Response({'message':'无效的token'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # 修改用户的email_active为True，完成验证
+        user.email_active = True
+        user.save()
+        return Response({'message': 'OK'})
