@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
     'users.apps.UsersConfig',
     'booktest.apps.BooktestConfig',
+    'areas.apps.AreasConfig',
 ]
 
 MIDDLEWARE = [
