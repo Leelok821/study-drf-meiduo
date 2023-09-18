@@ -227,9 +227,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',         # SessionAuthentication:此身份验证方案使用Django的默认会话后端进行身份验证
         # 'rest_framework.authentication.TokenAuthentication', # 基础token认证
     ],
-    'DEFAULT_PERMISSION_CLASSES':[
-        'rest_framework.permissions.IsAuthenticated',
-    ]
+    # 'DEFAULT_PERMISSION_CLASSES':[
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ]
 }
 # 指定默认的⽤户模型类
 AUTH_USER_MODEL = 'users.User'

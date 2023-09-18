@@ -27,4 +27,4 @@ class SubsSerializers(serializers.ModelSerializer):
     subs = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
     class Meta:
         model = Areas
-        fields = '__all__'
+        fields = ['id', 'name', 'subs']
