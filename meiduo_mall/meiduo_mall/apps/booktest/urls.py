@@ -22,4 +22,5 @@ urlpatterns = [
 
 router = DefaultRouter()
 router.register('books',BookModelViewSet)
+router.register('heros',HeroModelViewSet)
 urlpatterns += router.urls

@@ -3,12 +3,17 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView,CreateAPIView, RetrieveAPIView, UpdateAPIView
+from rest_framework.viewsets import GenericViewSet
 from rest_framework.serializers import Serializer
 from rest_framework.response import Response
+from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, DestroyModelMixin, ListModelMixin
 from rest_framework import status
-from users.models import User
-from users.serializers import CreateUserSerializer, UserDetailSerializer, EmailSerializer
+from users.models import User, Address
+from users.serializers import CreateUserSerializer, UserDetailSerializer, EmailSerializer, AddressSerializer
 from rest_framework.permissions import IsAuthenticated
+from meiduo_mall.apps.users import constants
+
+
 
 """使用genericapiview"""
 
@@ -79,3 +84,41 @@ class VerifyEmailView(APIView):
         user.email_active = True
         user.save()
         return Response({'message': 'OK'})
+
+class AddressViewSet(CreateModelMixin, UpdateModelMixin, ListModelMixin, GenericViewSet):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = AddressSerializer
+
+    def get_queryset(self):
+        return self.request.user.addresses.filter(is_deleted=False)
+
+    # GET /addresses/
+    def list(self, request, *args, **kwargs):
+        """用户地址列表数据"""
+        seria = self.get_serializer(self.get_queryset, many=True)
+        res = {
+            'message':'ok',
+            'addresses': seria.data,
+        }
+        return Response(res, status=status.HTTP_200_OK)
+
+    def create(self, request, *args, **kwargs):
+        """创建用户地址"""
+        # 校验用户地址是否超限
+        count = request.user.addresses.count()
+        if count <= constants.USER_ADDRESS_COUNTS_LIMIT:
+            return Response({'messgae':'超过上限'}, status.HTTP_400_BAD_REQUEST)
+        return super().create(request, *args, **kwargs)
+
+    # # /addresses/
+    # def create(self, request, *args, **kwargs):
+    #     # 判断用户有没有超过20个地址
+    #     count = self.request.user.addresses.count()  # self.request.user ？？？
+       
+    #     if count >= constants.USER_ADDRESS_COUNTS_LIMIT:
+    #         return Response({'message':'保存地址超过上限'}, status=status.HTTP_400_BAD_REQUEST)
+    #     return super().create(request, *args, **kwargs)
+    
+    # def update(self, request, *args, **kwargs):
+    #     return super().update(request, *args, **kwargs)

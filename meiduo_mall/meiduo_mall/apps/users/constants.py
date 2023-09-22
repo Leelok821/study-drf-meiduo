@@ -1,3 +1,4 @@
 import time
 
 VERIFY_EMAIL_TOKEN_EXPIRES = int(time.time()) + 60 * 24
+USER_ADDRESS_COUNTS_LIMIT = 20

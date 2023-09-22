@@ -229,4 +229,9 @@ class BookModelViewSet(ModelViewSet):
 
     queryset = BookInfo.objects.all()
     serializer_class = BookInfoModelSerializers
-    lookup_field = 'id'
+
+class HeroModelViewSet(ModelViewSet):
+
+    queryset = HeroInfo.objects.all()
+    serializer_class = HeroInfoModelSerializers
+    

@@ -246,7 +246,7 @@ CORS_ALLOW_CREDENTIALS = True # 允许携带cookie
 # JWT的有效期
 SIMPLE_JWT = {
 
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),  # 访问令牌的有效时间
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  # 访问令牌的有效时间
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),    # 刷新令牌的有效时间
     'TOKEN_OBTAIN_SERIALIZER': 'users.serializers.MyTokenObtainPairSerializer'
 }

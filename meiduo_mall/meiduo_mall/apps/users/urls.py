@@ -4,7 +4,7 @@
 '''
 
 from django.urls import path, include
-from users.views import UserView, UserNameCountView, UserDetailView, EmailView, VerifyEmailView
+from users.views import UserView, UserNameCountView, UserDetailView, EmailView, VerifyEmailView, AddressViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
 urlpatterns = [
@@ -22,5 +22,9 @@ urlpatterns = [
     path('email/', EmailView.as_view()), # emails/verification/
     path('emails/verification/', VerifyEmailView.as_view()), 
 
+    # 
+    path('addresses/', AddressViewSet.as_view({'get':'list','post':'create'})), 
+
 ]
+
 

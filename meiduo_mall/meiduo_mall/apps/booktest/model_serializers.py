@@ -17,6 +17,6 @@ class HeroInfoModelSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = HeroInfo
-        fields = '__all__'
+        exclude = ('hbook',)
         
 

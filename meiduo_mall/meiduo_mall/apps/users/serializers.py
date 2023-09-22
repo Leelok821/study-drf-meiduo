@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from celery_tasks.email.tasks import send_verify_email
-from users.models import User
+from users.models import User, Address
 from rest_framework.response import Response
 from django_redis import get_redis_connection
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -145,3 +145,21 @@ class EmailSerializer(serializers.ModelSerializer):
         send_verify_email.delay(instance.email, verify_url)
         return instance
 
+
+class AddressSerializer(serializers.ModelSerializer):
+
+    province = serializers.StringRelatedField(read_only=True)
+    city = serializers.StringRelatedField(read_only=True)
+    distinct = serializers.StringRelatedField(read_only=True)
+    province_id = serializers.IntegerField(required=True)
+    city_id = serializers.IntegerField(required=True)
+    distinct_id = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        model = Address
+        exclude = ('user', 'is_deleted', 'create_time', 'update_time')
+    
+    def create(self, validated_data):
+        user = self.context['request'].user
+        validated_data['user'] = user
+        return super().create(validated_data)
