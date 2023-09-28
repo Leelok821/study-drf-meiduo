@@ -14,7 +14,6 @@ from rest_framework.permissions import IsAuthenticated
 from meiduo_mall.apps.users import constants
 
 
-
 """使用genericapiview"""
 
 # class UserView(GenericAPIView):
@@ -85,7 +84,7 @@ class VerifyEmailView(APIView):
         user.save()
         return Response({'message': 'OK'})
 
-class AddressViewSet(CreateModelMixin, UpdateModelMixin, ListModelMixin, GenericViewSet):
+class AddressViewSet(CreateModelMixin, UpdateModelMixin, GenericViewSet):
 
     permission_classes = [IsAuthenticated]
     serializer_class = AddressSerializer
@@ -93,23 +92,30 @@ class AddressViewSet(CreateModelMixin, UpdateModelMixin, ListModelMixin, Generic
     def get_queryset(self):
         return self.request.user.addresses.filter(is_deleted=False)
 
-    # GET /addresses/
-    def list(self, request, *args, **kwargs):
-        """用户地址列表数据"""
-        seria = self.get_serializer(self.get_queryset, many=True)
-        res = {
-            'message':'ok',
-            'addresses': seria.data,
-        }
-        return Response(res, status=status.HTTP_200_OK)
+    # # GET /addresses/
+    # def list(self, request, *args, **kwargs):
+    #     """用户地址列表数据"""
+    #     seria = self.get_serializer(self.get_queryset, many=True)
+    #     res = {
+    #         'message':'ok',
+    #         'addresses': seria.data,
+    #     }
+    #     return Response(res, status=status.HTTP_200_OK)
 
+    # post /addresses/
     def create(self, request, *args, **kwargs):
         """创建用户地址"""
         # 校验用户地址是否超限
         count = request.user.addresses.count()
         if count <= constants.USER_ADDRESS_COUNTS_LIMIT:
-            return Response({'messgae':'超过上限'}, status.HTTP_400_BAD_REQUEST)
+            return Response({'messgae':'保存地址数超过上限'}, status.HTTP_400_BAD_REQUEST)
         return super().create(request, *args, **kwargs)
+    
+    def status(self, request, pk=None):
+        """设置默认地址"""
+        address = self.get_object()
+        
+
 
     # # /addresses/
     # def create(self, request, *args, **kwargs):
