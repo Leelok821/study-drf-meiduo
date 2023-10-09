@@ -31,7 +31,7 @@ var vm = new Vue({
         input_title: ''
     },
     mounted: function(){
-        axios.get(this.host + 'areas/areas/', {
+        axios.get(this.host + '/areas/', {
                 responseType: 'json'
             })
             .then(response => {
@@ -41,26 +41,26 @@ var vm = new Vue({
                 alert(error.response.data);
             });
 
-        获取用户地址列表
-        axios.get(this.host + 'users/addresses/', {
-                headers: {
-                    'Authorization': 'JWT ' + this.token
-                },
-                responseType: 'json'
-            })
-            .then(response => {
-                this.addresses = response.data.addresses;
-                this.limit = response.data.limit;
-                this.default_address_id = response.data.default_address_id;
-            })
-            .catch(error => {
-                status = error.response.status;
-                if (status == 401 || status == 403) {
-                    location.href = 'login.html?next=/user_center_site.html';
-                } else {
-                    alert(error.response.data.detail);
-                }
-            })
+        // 获取用户地址列表
+        // axios.get(this.host + '/addresses/', {
+        //         headers: {
+        //             'Authorization': 'JWT ' + this.token
+        //         },
+        //         responseType: 'json'
+        //     })
+        //     .then(response => {
+        //         this.addresses = response.data.addresses;
+        //         this.limit = response.data.limit;
+        //         this.default_address_id = response.data.default_address_id;
+        //     })
+        //     .catch(error => {
+        //         status = error.response.status;
+        //         if (status == 401 || status == 403) {
+        //             location.href = 'login.html?next=/user_center_site.html';
+        //         } else {
+        //             alert(error.response.data.detail);
+        //         }
+        //     })
     },
     watch: {
         'form_address.province_id': function(){
@@ -167,9 +167,9 @@ var vm = new Vue({
                 this.form_address.title = this.form_address.receiver;
                 if (this.editing_address_index === '') {
                     // 新增地址
-                    axios.post(this.host + 'users/addresses/', this.form_address, {
+                    axios.post(this.host + '/addresses/', this.form_address, {
                         headers: {
-                            'Authorization': 'JWT ' + this.token
+                            'Authorization': 'Bearer ' + this.token
                         },
                         responseType: 'json'
                     })
@@ -184,9 +184,9 @@ var vm = new Vue({
                 } else {
 
                     // 修改地址
-                    axios.put(this.host + 'users/addresses/' + this.addresses[this.editing_address_index].id + '/', this.form_address, {
+                    axios.put(this.host + '/addresses/' + this.addresses[this.editing_address_index].id + '/', this.form_address, {
                         headers: {
-                            'Authorization': 'JWT ' + this.token
+                            'Authorization': 'Bearer ' + this.token
                         },
                         responseType: 'json'
                     })
@@ -204,7 +204,7 @@ var vm = new Vue({
         del_address: function(index){
             axios.delete(this.host + '/addresses/' + this.addresses[index].id + '/', {
                     headers: {
-                        'Authorization': 'JWT ' + this.token
+                        'Authorization': 'Bearer ' + this.token
                     },
                     responseType: 'json'
                 })
@@ -220,7 +220,7 @@ var vm = new Vue({
         set_default: function(index){
             axios.put(this.host + '/addresses/' + this.addresses[index].id + '/status/', {}, {
                     headers: {
-                        'Authorization': 'JWT ' + this.token
+                        'Authorization': 'Bearer ' + this.token
                     },
                     responseType: 'json'
                 })

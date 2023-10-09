@@ -12,8 +12,10 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 urlpatterns = [
     # path('books/', BO.as_view({'get':'list','post':'create'})),
     # path('books/<int:id>/', BookModelViewSet.as_view({'get':'retrieve','put':'update','delete':'destroy'})),
+
+    # ApiView
     path('books/api_view/', BookListApiView.as_view()),
-    path('books/<int:id>/api_view/', BookInfoApiView.as_view()),
+    path('books/api_view/<int:id>/', BookInfoApiView.as_view()),
     # GenericApiView
     path('books/generic_api_view/', BookListGenericAPIView.as_view()),
     # path('books/<int:id>/generic_api_view/', BookInfoApiView.as_view()),

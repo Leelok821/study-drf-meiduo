@@ -29,20 +29,26 @@ class BookListApiView(APIView):
         request_data = request.data
         seria = BookInfoSerializer(data=request_data)
         seria.is_valid(raise_exception=True)
-        seria.save()
+        seria.save()        # 必须保存
         return Response(seria.data)
 
 class BookInfoApiView(APIView):
 
     def get(self, request, id):
-        obj = BookInfo.objects.get(id=id)
-        seria = BookInfoSerializer(obj)
+        try:
+            obj = BookInfo.objects.get(id=id)
+            seria = BookInfoSerializer(obj)
+        except BookInfo.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(seria.data)
     
     def put(self, request, id):
-        obj = BookInfo.objects.get(id=id)
-        req_data = request.data
-        seria = BookInfoSerializer(obj, req_data)
+        try:
+            obj = BookInfo.objects.get(id=id)
+            req_data = request.data
+            seria = BookInfoSerializer(obj, req_data)
+        except BookInfo.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
         seria.is_valid(raise_exception=True)
         seria.save()
         return Response(seria.data)
@@ -71,4 +77,26 @@ class BookListGenericAPIView(GenericAPIView):
         return Response(seria.data)
     
     def post(self, request):
-        
+        req_data = request.data
+        seria = self.get_serializer(data=req_data)
+        seria.is_valid(raise_exception=True)
+        seria.save()
+        return Response(seria.data)
+
+
+class BookInfoGenericAPIView(GenericAPIView):
+    queryset = BookInfo.objects
+    serializer_class = BookInfoSerializer
+    lookup_field = 'id'
+
+    def get(self, request, id):
+        obj = self.get_object()
+        seria = BookInfoSerializer(obj)
+        return Response(seria.data)
+    
+    def put(self, request, id):
+        obj = self.get_object()
+        seria = self.get_serializer(obj, data=request.data)
+        seria.is_valid(raise_exception=True)
+        seria.save()
+        return Response(seria.data)

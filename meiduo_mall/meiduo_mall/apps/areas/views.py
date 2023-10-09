@@ -7,6 +7,7 @@ from areas.serializers import *
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.viewsets import ModelViewSet, ViewSet, GenericViewSet, ReadOnlyModelViewSet
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 
@@ -143,14 +144,19 @@ from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
 class ListSubsAreaViewSet(CacheResponseMixin, ReadOnlyModelViewSet):
 
-    def get_serializer_class(self):
-        if self.action == 'list':
-            return AreasSerializer
-        if self.action == 'retrieve':
-            return SubsSerializers
+    # permission_classes = (IsAuthenticated,)
     
+    # 不分页
+    pagination_class = None
+
     def get_queryset(self):
         if self.action == 'list':
             return Areas.objects.filter(parent=None)
         else:
             return Areas.objects.all()
+    
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return AreasSerializer
+        else:
+            return SubsSerializers

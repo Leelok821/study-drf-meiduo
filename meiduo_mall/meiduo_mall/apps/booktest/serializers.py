@@ -9,7 +9,7 @@ class BookInfoSerializer(serializers.Serializer):
 
     id = serializers.IntegerField(read_only=True,label='书籍编号')
     btitle = serializers.CharField(max_length=20,min_length=3,label='名称')
-    bpub_date = serializers.DateField(label='发布日期')
+    bpub_date = serializers.DateField(label='发布日期')     # 必填字段如果没有的话，系统会报错
     bread = serializers.IntegerField(default=0,min_value=0,label='阅读量')
     bcomment = serializers.IntegerField(default=0,max_value=50,label='评论量')
     is_delete = serializers.BooleanField(default=False,label='逻辑删除')

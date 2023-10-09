@@ -90,10 +90,10 @@ WSGI_APPLICATION = 'meiduo_mall.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '127.0.0.1',  # 数据库主机
+        'HOST': '110.42.219.144',  # 数据库主机
         'PORT': 3306,  # 数据库端⼝
-        'USER': 'root',  # 数据库⽤户名
-        'PASSWORD': 'asd123456',  # 数据库⽤户密码
+        'USER': 'lee',  # 数据库⽤户名
+        'PASSWORD': 'Aaa8640838.',  # 数据库⽤户密码
         'NAME': 'meiduo_24'  # 数据库名字
     }}
 # DATABASES = {
@@ -107,21 +107,21 @@ DATABASES = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/0",
+        "LOCATION": "redis://110.42.219.144:6379/0",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     },
     "session": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": "redis://110.42.219.144:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     },
     "verify_codes": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/2",
+        "LOCATION": "redis://110.42.219.144:6379/2",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "DECODE_RESPONSES": True

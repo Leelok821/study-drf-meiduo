@@ -16,7 +16,7 @@ var vm = new Vue({
     mounted: function () {
         // 判断用户的登录状态
         if (this.user_id && this.token) {
-            axios.get(this.host + '/users/user/', {
+            axios.get(this.host + '/user/', {
                 // 向后端传递JWT token的方法
                 headers: {
                     'Authorization': 'Bearer ' + this.token
@@ -56,7 +56,7 @@ var vm = new Vue({
                 this.email_error = true;
                 return;
             }
-            axios.put(this.host + '/users/email/',
+            axios.put(this.host + '/email/',
                 { email: this.email },
                 {
                     headers: {

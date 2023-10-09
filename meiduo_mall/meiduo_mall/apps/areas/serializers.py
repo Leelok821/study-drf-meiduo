@@ -20,11 +20,11 @@ class AreasSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Areas
-        fields = ['id', 'name']
+        fields = ('id', 'name')
 
 class SubsSerializers(serializers.ModelSerializer):
+    subs = AreasSerializer(many=True, read_only=True)
 
-    subs = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
     class Meta:
         model = Areas
-        fields = ['id', 'name', 'subs']
+        fields = ('id', 'name', 'subs')
