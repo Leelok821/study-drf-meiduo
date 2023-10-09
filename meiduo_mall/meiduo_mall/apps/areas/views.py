@@ -144,10 +144,10 @@ from rest_framework.permissions import IsAuthenticated
 
 class ListSubsAreaViewSet(CacheResponseMixin, ReadOnlyModelViewSet):
 
-    # permission_classes = (IsAuthenticated,)
+    # # permission_classes = (IsAuthenticated,)
     
-    # 不分页
-    pagination_class = None
+    # # 不分页
+    # pagination_class = None
 
     def get_queryset(self):
         if self.action == 'list':

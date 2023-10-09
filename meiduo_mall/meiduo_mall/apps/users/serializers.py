@@ -160,11 +160,13 @@ class AddressSerializer(serializers.ModelSerializer):
         exclude = ('user', 'is_deleted', 'create_time', 'update_time')
 
     def validate_mobile(self, value):
+        # 校验手机号
         if not re.match(r'^1[3-9]\d{9}$', value):
             return serializers.ValidationError('手机号格式错误')
         return value
     
     def create(self, validated_data):
+        # 创建时将user塞进去
         user = self.context['request'].user
         validated_data['user'] = user
         return super().create(validated_data)
