@@ -6,6 +6,7 @@
 from django.urls import path, include
 from users.views import UserView, UserNameCountView, UserDetailView, EmailView, VerifyEmailView, AddressViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+from rest_framework.routers import DefaultRouter
 
 urlpatterns = [
     # 获取token的接口
@@ -22,9 +23,10 @@ urlpatterns = [
     path('email/', EmailView.as_view()), # emails/verification/
     path('emails/verification/', VerifyEmailView.as_view()), 
 
-    # 
-    path('addresses/', AddressViewSet.as_view({'get':'list','post':'create'})), 
-
 ]
 
 
+router = DefaultRouter()
+router.register('addresses', AddressViewSet, basename='addresses')
+
+urlpatterns += router.urls

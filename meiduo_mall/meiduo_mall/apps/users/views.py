@@ -89,7 +89,6 @@ class AddressViewSet(CreateModelMixin, DestroyModelMixin, GenericViewSet, Update
     serializer_class = AddressSerializer
     queryset = None
 
-
     # POST /addresses/
     def create(self, request, *args, **kwargs):
         # 先判断是否达到新增上限

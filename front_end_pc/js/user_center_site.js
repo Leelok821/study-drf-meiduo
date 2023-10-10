@@ -248,7 +248,7 @@ var vm = new Vue({
                         title: this.input_title
                     }, {
                         headers: {
-                            'Authorization': 'JWT ' + token
+                            'Authorization': 'Bearer ' + token
                         },
                         responseType: 'json'
                     })
