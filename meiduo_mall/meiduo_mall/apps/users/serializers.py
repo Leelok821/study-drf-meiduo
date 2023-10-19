@@ -150,10 +150,10 @@ class AddressSerializer(serializers.ModelSerializer):
 
     province = serializers.StringRelatedField(read_only=True)
     city = serializers.StringRelatedField(read_only=True)
-    distinct = serializers.StringRelatedField(read_only=True)
+    district = serializers.StringRelatedField(read_only=True)
     province_id = serializers.IntegerField(required=True)
     city_id = serializers.IntegerField(required=True)
-    distinct_id = serializers.IntegerField(required=True)
+    district_id = serializers.IntegerField(required=True)
 
     class Meta:
         model = Address

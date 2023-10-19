@@ -57,13 +57,12 @@ class Address(BaseModel):
     receiver = models.CharField(max_length=20, verbose_name='收货人')
     province = models.ForeignKey('areas.Areas', on_delete=models.CASCADE, related_name='province_addresse', verbose_name='省') 
     city = models.ForeignKey('areas.Areas', on_delete=models.CASCADE, related_name='city_addresse', verbose_name='市')
-    distinct = models.ForeignKey('areas.Areas', on_delete=models.CASCADE, related_name='distinct_addresse', verbose_name='区')
+    district = models.ForeignKey('areas.Areas', on_delete=models.CASCADE, related_name='distinct_addresse', verbose_name='区')
     place = models.CharField(max_length=20, verbose_name='地址')
     mobile = models.CharField(max_length=11, verbose_name='手机')
     tel = models.CharField(max_length=20, null=True, blank=True, default='', verbose_name='固定电话')
     email = models.CharField(max_length=30, null=True, blank=True, default='', verbose_name='电子邮箱')
     is_deleted = models.BooleanField(default=False, verbose_name='逻辑删除')
-
 
     class Meta:
         db_table = 'tb_address'

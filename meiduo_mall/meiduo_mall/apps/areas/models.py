@@ -26,3 +26,6 @@ class Areas(models.Model):
 
     class Meta:
         db_table = 'tb_areas'
+    
+    def __str__(self) -> str:
+        return self.name

@@ -87,7 +87,6 @@ class VerifyEmailView(APIView):
 
 class AddressViewSet(CreateModelMixin, DestroyModelMixin, GenericViewSet, UpdateModelMixin):
     serializer_class = AddressSerializer
-    queryset = None
 
     # POST /addresses/
     def create(self, request, *args, **kwargs):
@@ -107,10 +106,12 @@ class AddressViewSet(CreateModelMixin, DestroyModelMixin, GenericViewSet, Update
         qs = self.get_queryset()
         seria = self.get_serializer(qs, many=True)
         user = self.request.user
+
+        print(f'======={user.default_address_id}===')
         return Response(
             {
             'user_id': user.id,
-            'defalut_address_id': user.default_address,
+            'default_address_id': user.default_address_id,
             'limit': constants.USER_ADDRESS_COUNTS_LIMIT,
             'addresses': seria.data
             }
@@ -129,9 +130,9 @@ class AddressViewSet(CreateModelMixin, DestroyModelMixin, GenericViewSet, Update
         return Response(status.HTTP_204_NO_CONTENT)
     
     @action(['put'], detail=True)
-    def update_default(self, request):
+    def status(self, request, pk):
         """更新默认地址"""
         addresses = self.get_object()
-        self.request.user.default_address = addresses
-        self.request.user.save()
+        request.user.default_address = addresses
+        request.user.save()
         return Response({'massge':'OK'}, status.HTTP_200_OK)
