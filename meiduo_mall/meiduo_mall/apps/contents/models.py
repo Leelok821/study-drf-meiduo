@@ -1,9 +1,9 @@
 from django.db import models
-
+from meiduo_mall.utils.models import BaseModel
 # Create your models here.
 
 
-class ContentCategory(models):
+class ContentCategory(BaseModel):
     """广告类别表"""
     name = models.CharField(max_length=50, verbose_name='名称')
     key = models.CharField(max_length=50, verbose_name='类别键名')
@@ -17,7 +17,7 @@ class ContentCategory(models):
         return self.name
 
 
-class Content(models):
+class Content(BaseModel):
     """广告内容"""
     category = models.ForeignKey(ContentCategory, on_delete=models.PROTECT, verbose_name='类别')
     title = models.CharField(max_length=100, verbose_name='标题')

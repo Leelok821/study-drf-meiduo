@@ -22,4 +22,6 @@ urlpatterns = [
     path('', include('users.urls')),
     path('', include('booktest.urls')),
     path('', include('areas.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),       # 富⽂本编辑器
+
 ]

@@ -46,10 +46,14 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'corsheaders',  # 跨域
+    'ckeditor', # 富文本编辑器
+    'ckeditor_uploader', # 富文本编辑器上传文件模块
 
     'users.apps.UsersConfig',
     'booktest.apps.BooktestConfig',
     'areas.apps.AreasConfig',
+    'contents.apps.ContentsConfig',
+    'goods.apps.GoodsConfig',
 ]
 
 MIDDLEWARE = [
@@ -154,9 +158,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# 中文zh-hans
+# LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -270,3 +277,18 @@ REST_FRAMEWORK_EXTENSIONS = {
     # 缓存存储
     'DEFAULT_USE_CACHE': 'default'
 }
+
+# django存储类
+DEFAULT_FILE_STORAGE = 'meiduo_mall.utils.fastdfs.fastdfs_storage.FastdfsStorage'
+
+# FDFS
+FDFS_CLIENT_CONF = os.path.join(BASE_DIR, 'utils/fastdfs/client.conf')
+FDFS_BASE_URL = 'https://110.42.219.144:8888'
+
+# 富⽂本编辑器ckeditor配置
+CKEDITOR_CONFIGS = {'default': {'toolbar': 'full', # ⼯具条功能
+ 'height': 300, # 编辑器⾼度
+ # 'width': 300, # 编辑器宽
+ },
+}
+CKEDITOR_UPLOAD_PATH = '' # 上传图⽚保存路径，使⽤了FastDFS，所以此处设为''
