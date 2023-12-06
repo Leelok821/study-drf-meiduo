@@ -139,7 +139,7 @@ class SkuImage(BaseModel):
     image = models.ImageField(verbose_name='图片链接地址')
 
     class Meta:
-        db_table = 'tb_sku_img'
+        db_table = 'tb_sku_image'
         verbose_name = 'sku图片'
         verbose_name_plural = verbose_name
 
