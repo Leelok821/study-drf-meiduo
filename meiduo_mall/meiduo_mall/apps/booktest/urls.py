@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     # 验证Token的有效性
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path('books/test/template', TestTemplate.as_view())
 ]
 
 # router = DefaultRouter()

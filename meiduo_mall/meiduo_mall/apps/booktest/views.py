@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.views import View
 from django.db.models.query import QuerySet
+from django.shortcuts import render
 
 
 
@@ -100,3 +101,8 @@ class BookInfoGenericAPIView(GenericAPIView):
         seria.is_valid(raise_exception=True)
         seria.save()
         return Response(seria.data)
+
+class TestTemplate(APIView):
+
+    def get(self, request):
+        return render(request, 'index.html')
