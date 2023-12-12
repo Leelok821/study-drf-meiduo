@@ -301,4 +301,6 @@ GENERATED_STATIC_HTML_FILES_DIR = os.path.join(os.path.dirname(os.path.dirname(B
 # 定时任务
 CRONJOBS = [
  # 每1分钟执⾏⼀次⽣成主⻚静态⽂件
- ('*/1 * * * *', 'contents.crons.generate_static_index_html', '>> meiduo_mall/logs/crontab.log') ]
+ ('*/1 * * * *', 'contents.crons.generate_static_index_html', '>>/Users/lee/Desktop/github/mine/python/study-drf-meiduo-mall/meiduo_mall/logs/crontab.log') ]
+# 解决crontab中⽂问题
+CRONTAB_COMMAND_PREFIX = 'LANG_ALL=zh_cn.UTF-8'
